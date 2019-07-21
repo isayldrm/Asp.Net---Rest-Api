@@ -12,5 +12,10 @@ namespace Programing.Dal
         {
             return dbEntities.Users.FirstOrDefault(x=> x.UserKey.ToString()==apiKey);
         }
+
+        public User GetUserByName(string name)
+        {
+            return dbEntities.Users.FirstOrDefault(x => x.Name == name);
+        }
     }
 }

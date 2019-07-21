@@ -1,5 +1,6 @@
 ﻿using Programing.Dal;
 using ProgramingWebApi.Attributes;
+using ProgramingWebApi.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace ProgramingWebApi.Controllers
 
         //aynı işi yapar, kısa yolu
         //kullanıcı kontrol eder herkese acık degıl
-        [Authorize]
+        [ApiAuthorize(Roles = "Admin")]
         public IHttpActionResult Get()
         {
             var languages = languagesDal.GetAllLanguages();
@@ -48,7 +49,8 @@ namespace ProgramingWebApi.Controllers
         //aynı işi yapar, kısa yolu
         //donen tip hakkında bilgi verir
         [ResponseType(typeof(Language))]
-        [Authorize]
+        [ApiAuthorize (Roles="Admin,User")]
+        //kendi yazdıgım Authorize attribute
         public IHttpActionResult Get(int id)
         {
             var language = languagesDal.GetLanguageById(id);
@@ -61,6 +63,7 @@ namespace ProgramingWebApi.Controllers
         }
 
         [ResponseType(typeof(Language))]
+        [ApiAuthorize(Roles = "Admin")]
         public HttpResponseMessage Post(Language language)
         {
             //ModelState: Model belirlediğim kurallara uygunsa(Languge de) if içinde yap işlemi 
@@ -102,6 +105,7 @@ namespace ProgramingWebApi.Controllers
 
         //aynı işi yapar, kısa yolu
         [ResponseType(typeof(Language))]
+        [ApiAuthorize(Roles = "Admin")]
         public IHttpActionResult Put(int id, Language language)
         {
             if (languagesDal.IsThereAnyLanguage(id) == false)
@@ -139,6 +143,7 @@ namespace ProgramingWebApi.Controllers
 
 
         //aynı işi yapar, kısa yolu
+        [ApiAuthorize(Roles = "Admin")]
         public IHttpActionResult Delete(int id)
         {
             if (languagesDal.IsThereAnyLanguage(id) == false)
