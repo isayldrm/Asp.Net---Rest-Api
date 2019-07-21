@@ -26,6 +26,10 @@ namespace ProgramingWebApi
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            //sonucları Json Formatta dondurmek
+            config.Formatters.JsonFormatter.SerializerSettings.
+                Formatting = Newtonsoft.Json.Formatting.Indented;
         }
     }
 }
